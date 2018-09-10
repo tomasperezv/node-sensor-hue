@@ -1,5 +1,6 @@
 const huejay = require('huejay');
 const bridgeManager = require('./bridge.js');
+const apiClient = require('./api-client.js');
 
 bridgeManager.get()
   .then((bridge) => {
@@ -7,20 +8,15 @@ bridgeManager.get()
 
     client.sensors.getAll()
       .then((sensors) => {
-        const map = {};
         sensors.forEach((sensor) => {
           if (typeof sensor.uniqueId === 'undefined') {
             return;
           }
-          //console.log(JSON.stringify(sensor));
 
-          if (typeof map[sensor.name] !== 'undefined') {
-            map[sensor.name] = Object.assign(map[sensor.uniqueId], sensor);
-          } else {
-            map[sensor.name] = sensor;
+          if (sensor.type === 'ZLLTemperature') {
+            const temperature = sensor.state.attributes.attributes.temperature / 100;
+            apiClient.send('job5', sensor.uniqueId, temperature);
           }
         });
-
-        console.log(JSON.stringify(map['Office sensor'])); // eslint-disable-line
       });
   });
