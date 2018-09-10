@@ -16,8 +16,12 @@ bridgeManager.get()
           }
 
           if (sensor.type === 'ZLLTemperature') {
+            const metricId = sensor.name.replace(/\s/g, '');
+
             const temperature = sensor.state.attributes.attributes.temperature / 100;
-            apiClient.send('job5', sensor.uniqueId, temperature);
+
+            console.log(`${metricId} ${temperature}`); // eslint-disable-line
+            apiClient.send('job5', metricId, temperature);
           }
         });
       });
