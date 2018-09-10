@@ -4,6 +4,7 @@
   "description": "Interface for communicating with the Philip's Hue Lights sensor",
   "main": "src/index.js",
   "dependencies": {
+    "dotenv": "^6.0.0",
     "huejay": "^1.8.4"
   },
   "devDependencies": {},
