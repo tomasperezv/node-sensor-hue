@@ -1,5 +1,5 @@
 const formatter = require('./formatId.js');
-const JOB_ID = 'label5';
+const JOB_ID = 'job5';
 
 const sensor = function(sensor) {
   this.jobId = JOB_ID;
