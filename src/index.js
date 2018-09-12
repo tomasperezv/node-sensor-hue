@@ -3,6 +3,7 @@ require('dotenv').config();
 const huejay = require('huejay');
 const bridgeManager = require('./bridge.js');
 const apiClient = require('./api-client.js');
+const reporterFactory = require('./reporter/reporter-factory.js');
 
 bridgeManager.get()
   .then((bridge) => {
@@ -11,17 +12,10 @@ bridgeManager.get()
     client.sensors.getAll()
       .then((sensors) => {
         sensors.forEach((sensor) => {
-          if (typeof sensor.uniqueId === 'undefined') {
-            return;
-          }
-
-          if (sensor.type === 'ZLLTemperature') {
-            const metricId = sensor.name.replace(/\s/g, '');
-
-            const temperature = sensor.state.attributes.attributes.temperature / 100;
-
-            console.log(`${metricId} ${temperature}`); // eslint-disable-line
-            apiClient.send('job5', metricId, temperature);
+          const reporter = reporterFactory.get(sensor);
+          if (reporter !== null) {
+            console.log(`${reporter.metricId} ${reporter.value}`); // eslint-disable-line
+            apiClient.send(reporter.jobId, reporter.metricId, reporter.value);
           }
         });
       });
