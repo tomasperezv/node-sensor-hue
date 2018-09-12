@@ -5,6 +5,8 @@ const bridgeManager = require('./bridge.js');
 const apiClient = require('./api-client.js');
 const reporterFactory = require('./reporter/reporter-factory.js');
 
+const JOB_ID = 'job5';
+
 bridgeManager.get()
   .then((bridge) => {
     const client = new huejay.Client({ host: bridge.ip, username: process.env.HUE_USERNAME });
@@ -15,7 +17,7 @@ bridgeManager.get()
           const reporter = reporterFactory.get(sensor);
           if (reporter !== null) {
             console.log(`${reporter.metricId} ${reporter.value}`); // eslint-disable-line
-            apiClient.send(reporter.jobId, reporter.metricId, reporter.value);
+            apiClient.send(JOB_ID, reporter.metricId, reporter.value);
           }
         });
       });
