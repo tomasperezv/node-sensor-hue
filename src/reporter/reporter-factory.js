@@ -17,7 +17,7 @@ module.exports = {
         reporter = new Light(sensor);
         break;
 
-      case 'CLIPGenericStatus':
+      case 'ZLLPresence':
         reporter = new Motion(sensor);
         break;
     }
