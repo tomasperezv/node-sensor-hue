@@ -14,10 +14,11 @@ bridgeManager.get()
     client.sensors.getAll()
       .then((sensors) => {
         sensors.forEach((sensor) => {
+          console.log(sensor);
           const reporter = reporterFactory.get(sensor);
           if (reporter !== null) {
             console.log(`${reporter.metricId} ${reporter.value}`); // eslint-disable-line
-            apiClient.send(JOB_ID, reporter.metricId, reporter.value);
+            //apiClient.send(JOB_ID, reporter.metricId, reporter.value);
           }
         });
       });
