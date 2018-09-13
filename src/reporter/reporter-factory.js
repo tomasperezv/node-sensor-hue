@@ -1,6 +1,6 @@
 const Temperature = require('./temperature.js');
 const Light = require('./light-level.js');
-const Motion = require('./movement.js');
+const Motion = require('./motion.js');
 
 module.exports = {
   get: (sensor) => {
