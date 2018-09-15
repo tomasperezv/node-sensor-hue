@@ -1,6 +1,8 @@
 require('dotenv').config();
 
 const huejay = require('huejay');
+const http = require('http');
+
 const bridgeManager = require('./core/bridge.js');
 const apiClient = require('./api/client.js');
 const reporterFactory = require('./reporter/reporter-factory.js');
@@ -24,3 +26,9 @@ bridgeManager.get()
         });
       });
   });
+
+http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write(JSON.stringify({}));
+  res.end();
+}).listen(process.env.PORT);
