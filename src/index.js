@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const huejay = require('huejay');
-const bridgeManager = require('./bridge.js');
+const bridgeManager = require('./core/bridge.js');
 const apiClient = require('./api/client.js');
 const reporterFactory = require('./reporter/reporter-factory.js');
 

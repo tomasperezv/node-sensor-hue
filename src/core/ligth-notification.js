@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const huejay = require('huejay');
 const bridgeManager = require('./bridge.js');
-const DeviceConstants = require('./device-constants');
+const DeviceConstants = require('./constants');
 
 bridgeManager.get()
   .then((bridge) => {
