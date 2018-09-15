@@ -17,7 +17,9 @@ bridgeManager.get()
           const reporter = reporterFactory.get(sensor);
           if (reporter !== null) {
             console.log(`${reporter.metricId} ${reporter.value}`); // eslint-disable-line
-            apiClient.send(JOB_ID, reporter.metricId, reporter.value);
+            if (!process.env.PUSHGATEWAY_DISABLED) {
+              apiClient.send(JOB_ID, reporter.metricId, reporter.value);
+            }
           }
         });
       });
