@@ -16,12 +16,16 @@ const fetchGoogleFitness = function (callback) {
     access_token: process.env.GOOGLE_TOKEN
   });
 
-  const endTime = `${new Date().getTime()}000000`;
+  const startDate = new Date();
+  const currentDate = new Date();
+  startDate.setHours(startDate.getHours() > 0 ? startDate.getHours() - 1 : 23);
+
+  const datasetId = `${startDate.getTime()}000000-${currentDate.getTime()}000000`;
 
   fitness.users.dataSources.datasets.get({
     userId: 'me',
     dataSourceId: DATA_SOURCE_ID,
-    datasetId: `0-${endTime}`,
+    datasetId,
     auth: localOauth2Client
   }, callback);
 };
