@@ -1,9 +1,9 @@
 const requestInterface = require('http');
 
 module.exports = {
-  send: (job, metric, value) => {
+  send: (job, metric, value, label = 'val1') => {
     const data = `# TYPE real_metric untyped
-${metric}{label="val1"} ${value}
+${metric}{label="${label}"} ${value}
     `;
 
     const options = {
