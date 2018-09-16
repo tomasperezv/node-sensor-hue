@@ -31,8 +31,12 @@ http.createServer((request, response) => {
 
   console.log(`Obtained OAUTH code ${code}`); // eslint-disable-line no-console
 
-  oauth2Client.getToken(code, (err, token) => {
-    console.log(`Token is ${JSON.stringify(token)}`);
+  oauth2Client.getToken(code, (err, tokenData) => {
+    if (err) {
+      console.log(err); // eslint-disable-line no-console
+    } else {
+      console.log(`Token is ${JSON.stringify(tokenData)}`); // eslint-disable-line no-console
+    }
   });
 
   request.on('end', () => {
@@ -45,7 +49,8 @@ http.createServer((request, response) => {
 
 const url = oauth2Client.generateAuthUrl({
   access_type: 'offline',
-  scope: SCOPES
+  scope: SCOPES,
+  prompt: 'consent'
 });
 
 console.log(url); // eslint-disable-line no-console
