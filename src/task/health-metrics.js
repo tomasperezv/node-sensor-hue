@@ -1,6 +1,7 @@
 const googleFitness = require('../health/google-fitness.js');
 
 const apiClient = require('../api/client.js');
+const formatter = require('../reporter/formatId.js');
 const Constant = require('../core/constants.js');
 
 module.exports = () => {
@@ -8,7 +9,7 @@ module.exports = () => {
     .then((dataPoints) => {
       const lastMetric = dataPoints[dataPoints.length - 1];
 
-      const metricId = lastMetric.dataTypeName;
+      const metricId = formatter.parse(lastMetric.dataTypeName);
       const value = lastMetric.value[0].fpVal;
       console.log(`${metricId} ${value}`); // eslint-disable-line
 
