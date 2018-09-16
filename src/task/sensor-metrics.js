@@ -3,8 +3,7 @@ const huejay = require('huejay');
 const bridgeManager = require('../core/bridge.js');
 const apiClient = require('../api/client.js');
 const reporterFactory = require('../reporter/reporter-factory.js');
-
-const JOB_ID = 'job5';
+const Constant = require('../core/constants.js');
 
 module.exports = () => {
   bridgeManager.get()
@@ -18,7 +17,7 @@ module.exports = () => {
             if (reporter !== null) {
               console.log(`${reporter.metricId} ${reporter.value}`); // eslint-disable-line
               if (!process.env.PUSHGATEWAY_DISABLED) {
-                apiClient.send(JOB_ID, reporter.metricId, reporter.value);
+                apiClient.send(Constant.JOB_ID_SENSOR, reporter.metricId, reporter.value);
               }
             }
           });
