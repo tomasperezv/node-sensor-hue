@@ -27,6 +27,8 @@ module.exports = () => {
       if (typeof result.metric === 'undefined' || typeof result.value === 'undefined') {
         response.writeHead(400, {});
       } else {
+        console.log(`Sending metric ${metric} ${value}`); // eslint-disable-line no-console
+
         const { metric, value } = result;
         apiClient.send(Constant.JOB_ID_EXTERNAL, metric, value);
 
