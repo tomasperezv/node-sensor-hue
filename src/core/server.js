@@ -28,9 +28,10 @@ module.exports = () => {
         console.log(`Invalid metric ${body}`); // eslint-disable-line no-console
         response.writeHead(400, {});
       } else {
+        const { metric, value } = result;
+
         console.log(`Sending metric ${metric} ${value}`); // eslint-disable-line no-console
 
-        const { metric, value } = result;
         apiClient.send(Constant.JOB_ID_EXTERNAL, metric, value);
 
         response.writeHead(200, { 'Content-Type': 'application/json' });
