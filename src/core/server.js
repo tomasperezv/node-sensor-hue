@@ -18,7 +18,12 @@ module.exports = () => {
     request.on('end', () => {
       console.log(body); // eslint-disable-line
 
-      const result = JSON.parse(body);
+      let result = {};
+      try {
+        result = JSON.parse(body);
+      } catch (e) {
+      }
+
       if (typeof result.metric === 'undefined' || typeof result.value === 'undefined') {
         response.writeHead(400, {});
       } else {
