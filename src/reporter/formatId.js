@@ -1,5 +1,5 @@
 module.exports = {
   parse: (id) => {
-    return id.replace(/\s/g, '');
+    return id.replace(/\s\./g, '');
   }
 };
