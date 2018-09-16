@@ -25,6 +25,7 @@ module.exports = () => {
       }
 
       if (typeof result.metric === 'undefined' || typeof result.value === 'undefined') {
+        console.log(`Invalid metric ${body}`); // eslint-disable-line no-console
         response.writeHead(400, {});
       } else {
         console.log(`Sending metric ${metric} ${value}`); // eslint-disable-line no-console
