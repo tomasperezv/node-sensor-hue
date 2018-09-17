@@ -27,11 +27,8 @@ const fetchGoogleFitness = function (callback) {
     }
   });
 
-  const startDate = new Date();
   const currentDate = new Date();
-  startDate.setHours(startDate.getHours() > 0 ? startDate.getHours() - 3 : 23);
-
-  const datasetId = `${startDate.getTime()}000000-${currentDate.getTime()}000000`;
+  const datasetId = `0-${currentDate.getTime()}000000`;
 
   fitness.users.dataSources.datasets.get({
     userId: 'me',
