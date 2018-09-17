@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-require('dotenv').config();
 
 const { google } = require('googleapis');
 
