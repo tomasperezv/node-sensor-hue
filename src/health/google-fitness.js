@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 const { google } = require('googleapis');
 
 const fitness = google.fitness('v1');
