@@ -21,6 +21,8 @@ module.exports = {
 ${metric}{${labelValues(labels)}} ${value}
     `;
 
+    console.log(data);
+
     const options = {
       host: process.env.PUSHGATEWAY_HOST,
       port: 9091,
