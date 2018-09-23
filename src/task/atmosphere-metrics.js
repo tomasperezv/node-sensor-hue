@@ -1,4 +1,4 @@
-const Atmosphere = require('../atmosphere/');
+const Atmosphere = require('../atmosphere/reporter.js');
 
 const apiClient = require('../api/client.js');
 const formatter = require('../reporter/formatId.js');
