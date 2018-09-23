@@ -15,9 +15,12 @@ module.exports = () => {
           sensors.forEach((sensor) => {
             const reporter = reporterFactory.get(sensor);
             if (reporter !== null) {
-              console.log(`${reporter.metricId} ${reporter.value}`); // eslint-disable-line
+              console.log(`${reporter.metricId} ${reporter.value} ${reporter.labels}`); // eslint-disable-line
               if (!process.env.PUSHGATEWAY_DISABLED) {
-                apiClient.send(Constant.JOB_ID_SENSOR, reporter.metricId, reporter.value);
+                apiClient.send(
+                  Constant.JOB_ID_SENSOR,
+                  reporter.metricId, reporter.value, reporter.labels
+                );
               }
             }
           });

@@ -1,9 +1,24 @@
 const requestInterface = require('http');
 
+const labelValues = (labels) => {
+  let result = '{';
+  labels.forEach((label, index) => {
+    if (index > 0) {
+      result += ',';
+    }
+
+    result += `${label[0]}="${label[1]}"`;
+  });
+
+  result += '}';
+
+  return result;
+};
+
 module.exports = {
-  send: (job, metric, value, label = 'val1') => {
+  send: (job, metric, value, labels = [['label', 'val1']]) => {
     const data = `# TYPE real_metric untyped
-${metric}{label="${label}"} ${value}
+${metric}{${labelValues(labels)}} ${value}
     `;
 
     const options = {
