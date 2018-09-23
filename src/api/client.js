@@ -1,7 +1,6 @@
 const requestInterface = require('http');
 
 const labelValues = (labels) => {
-  let result = '{';
   labels.forEach((label, index) => {
     if (index > 0) {
       result += ',';
@@ -9,8 +8,6 @@ const labelValues = (labels) => {
 
     result += `${label[0]}="${label[1]}"`;
   });
-
-  result += '}';
 
   return result;
 };
