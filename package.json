@@ -6,7 +6,8 @@
   "dependencies": {
     "dotenv": "^6.0.0",
     "googleapis": "^33.0.0",
-    "huejay": "^1.8.4"
+    "huejay": "^1.8.4",
+    "netatmo": "^2.2.1"
   },
   "devDependencies": {},
   "scripts": {
