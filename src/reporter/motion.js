@@ -4,6 +4,7 @@ const Movement = function (sensor) {
   this.metricId = formatter.parse(`${sensor.name}${sensor.id}`);
   this.value = sensor.state.attributes.attributes.presence === true ? 1 : 0;
   this.labels = [
+    ['label', 'val1'],
     ['battery', sensor.config.attributes.attributes.battery],
     ['on', sensor.config.attributes.attributes.on],
     ['uniqueid', sensor.attributes.attributes.uniqueid],
