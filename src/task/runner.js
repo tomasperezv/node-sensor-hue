@@ -5,4 +5,5 @@ const atmosphereMetrics = require('./atmosphere-metrics.js');
 module.exports = () => {
   setInterval(sensorMetrics, process.env.METRICS_INTERVAL);
   setInterval(healthMetrics, process.env.METRICS_INTERVAL);
+  setInterval(atmosphereMetrics, process.env.METRICS_INTERVAL);
 };

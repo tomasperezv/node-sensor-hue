@@ -1,4 +1,5 @@
 const Netatmo = require('netatmo');
+const formatter = require('../reporter/formatId.js');
 
 module.exports = {
   get: () => {
@@ -9,20 +10,25 @@ module.exports = {
       password: process.env.NETATMO_PASSWORD
     });
 
-    client.getStationsData((err, devices) => {
-      console.log(devices);
-    });
+    const map = ['Temperature', 'CO2', 'Humidity', 'Pressure', 'Noise'];
 
     return new Promise((resolve) => {
       const options = {
-        device_id: '',
+        device_id: process.env.NETATMO_DEVICE_ID,
         scale: 'max',
-        type: ['Temperature', 'CO2', 'Humidity', 'Pressure', 'Noise']
+        type: map
       };
 
       client.getMeasure(options, (err, measure) => {
         if (!err) {
-          resolve(measure);
+          const data = measure[measure.length - 1].value[0].map((value, index) => {
+            return {
+              name: map[index],
+              value
+            };
+          });
+
+          resolve({ id: formatter.parse(process.env.NETATMO_DEVICE_ID), data });
         }
       });
     });

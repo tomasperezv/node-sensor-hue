@@ -1,24 +1,24 @@
 const Atmosphere = require('../atmosphere/reporter.js');
 
 const apiClient = require('../api/client.js');
-const formatter = require('../reporter/formatId.js');
 const Constant = require('../core/constants.js');
 
 module.exports = () => {
   Atmosphere.get()
-    .then((dataPoints) => {
-      const lastMetric = dataPoints[dataPoints.length - 1];
+    .then((result) => {
+      const { id, data } = result;
 
-      if (typeof lastMetric === 'undefined') {
-        return;
-      }
-
-      const metricId = formatter.parse(lastMetric.dataTypeName);
-      const value = lastMetric.value[0].fpVal;
-      console.log(`${metricId} ${value}`); // eslint-disable-line
+      data.forEach((metric) => {
+        const metricId = `${id}${metric.name}`;
+        console.log(`TEST-${metricId} ${metric.value}`); // eslint-disable-line
+      });
 
       if (!process.env.PUSHGATEWAY_DISABLED) {
-        apiClient.send(Constant.JOB_ID_HEALTH, metricId, value);
+        data.forEach((metric) => {
+          const metricId = `${id}${metric.name}`;
+          console.log(`TEST-${metricId} ${metric.value}`); // eslint-disable-line
+          apiClient.send(Constant.JOB_ID_WEATHER, metricId, metric.value);
+        });
       }
     });
 };
