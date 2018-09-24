@@ -28,7 +28,7 @@ module.exports = {
             };
           });
 
-          resolve({ id: formatter.parse(process.env.NETATMO_DEVICE_ID), data });
+          resolve({ id: 'netatmo', data });
         }
       });
     });

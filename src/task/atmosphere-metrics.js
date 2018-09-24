@@ -10,13 +10,13 @@ module.exports = () => {
 
       data.forEach((metric) => {
         const metricId = `${id}${metric.name}`;
-        console.log(`TEST-${metricId} ${metric.value}`); // eslint-disable-line
+        console.log(`${metricId} ${metric.value}`); // eslint-disable-line
       });
 
       if (!process.env.PUSHGATEWAY_DISABLED) {
         data.forEach((metric) => {
           const metricId = `${id}${metric.name}`;
-          console.log(`TEST-${metricId} ${metric.value}`); // eslint-disable-line
+          console.log(`${metricId} ${metric.value}`); // eslint-disable-line
           apiClient.send(Constant.JOB_ID_WEATHER, metricId, metric.value);
         });
       }
