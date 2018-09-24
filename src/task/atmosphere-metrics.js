@@ -16,8 +16,10 @@ module.exports = () => {
       if (!process.env.PUSHGATEWAY_DISABLED) {
         data.forEach((metric) => {
           const metricId = `${id}${metric.name}`;
-          console.log(`${metricId} ${metric.value}`); // eslint-disable-line
-          apiClient.send(Constant.JOB_ID_WEATHER, metricId, metric.value);
+          if (metric.value !== null) {
+            console.log(`${metricId} ${metric.value}`); // eslint-disable-line
+            apiClient.send(Constant.JOB_ID_WEATHER, metricId, metric.value);
+          }
         });
       }
     });
