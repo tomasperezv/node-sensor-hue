@@ -16,7 +16,7 @@ client.getStationsData((err, devices) => {
 const getPromiseForDevice = (moduleId, deviceId) => {
   const time = new Date();
   const minutes = time.getMinutes() > 29 ? time.getMinutes() - 30 : 0;
-  time.setMinutes(minutes - 30);
+  time.setMinutes(minutes);
 
   return new Promise((resolve) => {
     let id = deviceId.split(':')[0];
@@ -36,7 +36,6 @@ const getPromiseForDevice = (moduleId, deviceId) => {
 
     client.getMeasure(options, (err, rawMeasure) => {
       if (!err) {
-        console.log(JSON.stringify(rawMeasure));
         const measureLength = rawMeasure.length;
         const lastMeasure = rawMeasure[measureLength - 1];
         const valueLength = lastMeasure.value.length;
