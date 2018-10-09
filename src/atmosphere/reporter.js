@@ -9,11 +9,22 @@ const client = new Netatmo({
   password: process.env.NETATMO_PASSWORD
 });
 
+client.getStationsData((err, devices) => {
+  console.log(devices[0].modules); // eslint-disable-line no-console
+});
+
 const getPromiseForDevice = (moduleId, deviceId) => {
+  const time = new Date();
+  const minutes = time.getMinutes() > 29 ? time.getMinutes() - 30 : 0;
+  time.setMinutes(minutes - 30);
+
   return new Promise((resolve) => {
     let id = deviceId.split(':')[0];
     const options = {
       scale: 'max',
+      date_begin: time.getTime(),
+      scale: '5min',
+      limit: 1,
       device_id: deviceId,
       type: map
     };
@@ -23,9 +34,13 @@ const getPromiseForDevice = (moduleId, deviceId) => {
       id = moduleId.split(':')[0];
     }
 
-    client.getMeasure(options, (err, measure) => {
+    client.getMeasure(options, (err, rawMeasure) => {
       if (!err) {
-        const data = measure[measure.length - 1].value[0].map((value, index) => {
+        console.log(JSON.stringify(rawMeasure));
+        const measureLength = rawMeasure.length;
+        const lastMeasure = rawMeasure[measureLength - 1];
+        const valueLength = lastMeasure.value.length;
+        const data = lastMeasure.value[valueLength - 1].map((value, index) => {
           return {
             name: map[index],
             value
