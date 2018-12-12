@@ -9,9 +9,10 @@ const client = new Netatmo({
 
 const appendValue = (result, device) => {
   const data = device.dashboard_data;
-  data.id = device._id.split(':')[0]; // eslint-disable-line
-
-  result.push(data);
+  if (typeof data !== 'undefined') {
+    data.id = device._id.split(':')[0]; // eslint-disable-line
+    result.push(data);
+  }
 };
 
 module.exports = {
