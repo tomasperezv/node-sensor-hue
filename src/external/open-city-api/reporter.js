@@ -4,7 +4,7 @@ const fs = require('fs');
 /**
  * @type {Object} config
  */
-const config = {
+const Config = {
   URL: 'https://datos.madrid.es/egob/catalogo/212531-10515086-calidad-aire-tiempo-real.csv',
 
   /**
@@ -58,12 +58,18 @@ const config = {
 module.exports = {
   get: () => {
     return new Promise((resolve) => {
-      fs.createReadStream('data.csv')
-        .pipe(csv())
-        .on('data', results.push)
-        .on('end', () => {
-          console.log(results);
-        });
+      const result = [];
+
+      http.get(Config.URL, (res) => {
+        res.pipe(
+          fs.createReadStream('data.csv')
+            .pipe(csv())
+            .on('data', result.push)
+            .on('end', () => {
+              resolve(result);
+            })
+        );
+      });
     });
   }
 };
