@@ -55,6 +55,13 @@ const Config = {
   }
 };
 
+/**
+ * @param {Object} data
+ */
+const format = (data) => {
+  console.log(data);
+};
+
 module.exports = {
   get: () => {
     return new Promise((resolve) => {
@@ -66,7 +73,7 @@ module.exports = {
             .pipe(csv())
             .on('data', result.push)
             .on('end', () => {
-              resolve(result);
+              resolve(format(result));
             })
         );
       });
