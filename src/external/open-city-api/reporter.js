@@ -28,7 +28,7 @@ const Config = {
     '28079050_8_8',
     '28079050_9_47',
     '28079050_10_47',
-    '28079050_12_8',
+    '28079050_12_8'
   ],
 
   /**
@@ -89,7 +89,7 @@ const format = (data) => {
       }
 
       const metric = {
-        id: `${d.punto_muestreo}_${Config.Magnitudes[d.magnitud][1]}`,
+        id: `${Config.Magnitudes[d.magnitud][1]}_${d.punto_muestreo}`,
         value
       };
 
