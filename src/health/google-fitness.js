@@ -4,7 +4,18 @@ const { google } = require('googleapis');
 const fitness = google.fitness('v1');
 const { OAuth2 } = google.auth;
 
-const DATA_SOURCE_ID = 'derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm';
+/**
+ * @type {Array} dataSourceIds
+ */
+const dataSourceIds = [
+  'derived:com.google.weight:com.google.android.gms:merge_weight',
+  'derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm',
+  'derived:com.google.step_count.delta:com.google.android.gms:merge_step_deltas',
+  'derived:com.google.calories.expended:com.google.android.gms:merge_calories_expended',
+  'derived:com.google.activity.segment:com.google.android.gms:merge_activity_segments',
+  'derived:com.google.speed:com.google.android.gms:merge_speed'
+];
+
 let refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
 
 const fetchGoogleFitness = function (callback) {
@@ -28,12 +39,26 @@ const fetchGoogleFitness = function (callback) {
   const currentDate = new Date();
   const datasetId = `0-${currentDate.getTime()}000000`;
 
-  fitness.users.dataSources.datasets.get({
-    userId: 'me',
-    dataSourceId: DATA_SOURCE_ID,
-    datasetId,
-    auth: localOauth2Client
-  }, callback);
+  const result = [];
+  let pending = dataSourceIds.length;
+  dataSourceIds.forEach(id => {
+    fitness.users.dataSources.datasets.get({
+      userId: 'me',
+      dataSourceId: id,
+      datasetId,
+      auth: localOauth2Client
+    }, (err, response) => {
+      pending--;
+      if (!err && response.data.point) {
+        const size = response.data.point.length;
+        result.push(response.data.point[size - 1]);
+      }
+
+      if (pending === 0) {
+        callback(null, result);
+      }
+    });
+  });
 };
 
 module.exports = {
@@ -43,7 +68,7 @@ module.exports = {
         if (err) {
           reject(err);
         } else {
-          resolve(response.data.point);
+          resolve(response);
         }
       });
     });
