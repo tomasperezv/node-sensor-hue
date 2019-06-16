@@ -2,6 +2,10 @@ const requestInterface = require('http');
 
 const labelValues = (labels) => {
   let result = '';
+  if (!labels) {
+    return result;
+  }
+
   labels.forEach((label, index) => {
     if (index > 0) {
       result += ',';
